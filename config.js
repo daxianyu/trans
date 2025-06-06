@@ -10,24 +10,15 @@ module.exports = {
         rule.oneOf.forEach((one) => {
           if (one.use) {
             const uses = Array.isArray(one.use) ? one.use : [one.use];
-            if (
-              uses.some((u) =>
-                typeof u.loader === 'string' && u.loader.includes('sass-loader')
-              )
-            ) {
-              uses.forEach((l) => {
-                if (
-                  l &&
-                  typeof l.loader === 'string' &&
-                  l.loader.includes('sass-loader')
-                ) {
-                  l.options = {
-                    ...l.options,
-                    url: false,
-                  };
-                }
-              });
-            }
+            uses.forEach((u) => {
+              if (
+                u.loader &&
+                u.loader.includes('css-loader') &&
+                u.options
+              ) {
+                u.options.url = false;
+              }
+            });
           }
         });
       }
