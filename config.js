@@ -10,9 +10,17 @@ module.exports = {
         rule.oneOf.forEach((one) => {
           if (one.use) {
             const uses = Array.isArray(one.use) ? one.use : [one.use];
-            if (uses.some(({ loader }) => loader.includes('sass-loader'))) {
+            if (
+              uses.some((u) =>
+                typeof u.loader === 'string' && u.loader.includes('sass-loader')
+              )
+            ) {
               uses.forEach((l) => {
-                if (l.loader && l.loader.includes('sass-loader')) {
+                if (
+                  l &&
+                  typeof l.loader === 'string' &&
+                  l.loader.includes('sass-loader')
+                ) {
                   l.options = {
                     ...l.options,
                     url: false,
